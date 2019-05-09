@@ -5,6 +5,8 @@ Para el jueves de dentro de dos semanas entregar el ejercicio3 del examen de rec
 El ejercicio del ahorcado hacerlo a partir de la solucion del profe. 
 
 Hacer el Ejercicio3 de dos formas:
+Expresion regular para la ip = (\d{3}\.){3}\d{3}
+
   1. 
     Map<String, Map<String, Integer>>
     1er String: nombre de usuario
