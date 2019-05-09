@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,7 +30,7 @@ public class Juego extends JPanel {
 		setLayout(new BorderLayout());
 		
 		JPanel sup = new JPanel(new GridLayout(1, 1));
-		JLabel lblPalabra = new JLabel("PALABRA");
+		JLabel lblPalabra = new JLabel(new ImageIcon(getClass().getResource("/IA.jpg")));
 		lblPalabra.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createEmptyBorder(30, 30, 30, 30),
 				BorderFactory.createCompoundBorder(
