@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -20,6 +22,7 @@ public class Juego extends JPanel {
 	Lienzo lienzo;
 	String letras = "abcdefghijklmnñopqrstuvwxyz";
 	private Font font;
+	private Thread start;
 	
 	public Juego(Lienzo lienzo) throws FontFormatException, IOException {
 		this.lienzo = lienzo;
@@ -48,6 +51,7 @@ public class Juego extends JPanel {
 			JButton b = new JButton("" + letras.charAt(i)); //o usar (letras.subString(i, i + 1))
 			b.setFont(font);
 			inf.add(b);
+			b.setEnabled(false);//Todas la letras estan deshabilitadas, por el momento
 		}
 		inf.add(new JButton("Jugar"));
 		
