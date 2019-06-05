@@ -12,14 +12,12 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Ejercicio3 {
+public class Ips {
 
 	public static void main(String[] args) throws IOException{
 		Map<String, Map<String, Integer>> usuariosIp = new HashMap<>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int mensajes = 0; //contador para los mensajes por ip
-		int numIp = 0; //contador para el número de ips
-		int totalMensajes = 0; //contador para el total de mensajes
 		String ip = null , mensaje = null, usuario = null, linea;
 		boolean fin = false;
 		do {
@@ -120,6 +118,8 @@ public class Ejercicio3 {
 		
 		Iterator<Map.Entry<String, Map<String, Integer>>> mapa = usuariosIp.entrySet().iterator();
 		while (mapa.hasNext()) {
+			int numIp = 0; //contador para el número de ips
+			int totalMensajes = 0; //contador para el total de mensajes
 			Map.Entry<String, Map<String, Integer>> entrada1 = mapa.next();		
 			String nombreUsuario = entrada1.getKey();
 			System.out.println(nombreUsuario + ":");
@@ -134,9 +134,9 @@ public class Ejercicio3 {
 				numIp++;
 				totalMensajes = totalMensajes + ips.getValue();		
 			}
+			System.out.println("\n" + "Número de IPs: " + numIp);
+			System.out.println("Total de mensajes: " + totalMensajes);
+			System.out.println();
 		}
-		System.out.println();
-		System.out.println("Número de IPs: " + numIp);
-		System.out.println("Total de mensajes: " + totalMensajes);
 	}	
 }
