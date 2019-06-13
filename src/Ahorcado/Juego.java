@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -22,7 +23,6 @@ public class Juego extends JPanel {
 	Lienzo lienzo;
 	String letras = "abcdefghijklmnñopqrstuvwxyz";
 	private Font font;
-	private Thread start;
 	
 	public Juego(Lienzo lienzo) throws FontFormatException, IOException {
 		this.lienzo = lienzo;
@@ -42,7 +42,7 @@ public class Juego extends JPanel {
 		lblPalabra.setHorizontalAlignment(JLabel.CENTER);
 		lblPalabra.setFont(font);
 		sup.add(lblPalabra);
-		
+
 		JPanel inf = new JPanel(new GridLayout(4, 7)); //para poner el teclado en el layout
 		inf.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createEmptyBorder(30, 30, 30, 30),
@@ -51,11 +51,17 @@ public class Juego extends JPanel {
 			JButton b = new JButton("" + letras.charAt(i)); //o usar (letras.subString(i, i + 1))
 			b.setFont(font);
 			inf.add(b);
-			b.setEnabled(false);//Todas la letras estan deshabilitadas, por el momento
+			b.setEnabled(false);//Todas la letras estan deshabilitadas
 		}
 		inf.add(new JButton("Jugar"));
-		
+
 		add(sup, BorderLayout.CENTER);
 		add(inf, BorderLayout.SOUTH);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		String accion = e.getActionCommand();
+		
+		
 	}
 }

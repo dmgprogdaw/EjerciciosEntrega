@@ -44,7 +44,7 @@ public class Ips {
 						break;
 					case 1:
 						try {
-							ip = teclado.skip("((\\d{1,2}|1\\d{2}|2[0-4]\\d|25[0-5]).){3}(?:\\d{1,2}|1\\d{2}|2[0-4]\\d|25[0-5])\\)").match().group();
+							ip = teclado.skip("(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)").match().group();
 							estado = 2;					
 						} catch (NoSuchElementException e) {
 								System.out.println("Se esperaba una dirección ip válida");
@@ -53,7 +53,7 @@ public class Ips {
 						break;
 					case 2:
 						try {
-							token = teclado.skip("\\s*mensaje=\\(").match().group();					
+							token = teclado.skip("\\)\\s*mensaje=\\(").match().group();					
 							estado = 3;
 						} catch (NoSuchElementException e) {
 							System.out.println("Se esperaba 'mensaje'");
@@ -128,9 +128,9 @@ public class Ips {
 			while (mapa2.hasNext()) {
 				Map.Entry<String, Integer> ips = mapa2.next();
 				if (mapa2.hasNext()) 
-					System.out.print(ips.getKey() + "=> " +ips.getValue() + ", ");
+					System.out.print(ips.getKey() + " => " +ips.getValue() + ", ");
 				else
-					System.out.print(ips.getKey() + "=> " +ips.getValue() + " ");
+					System.out.print(ips.getKey() + " => " +ips.getValue() + " ");
 				numIp++;
 				totalMensajes = totalMensajes + ips.getValue();		
 			}
