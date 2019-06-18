@@ -59,9 +59,4 @@ public class Juego extends JPanel {
 		add(inf, BorderLayout.SOUTH);
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		String accion = e.getActionCommand();
-		
-		
-	}
 }

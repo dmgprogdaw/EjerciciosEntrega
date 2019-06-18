@@ -17,7 +17,7 @@ public class Ips {
 	public static void main(String[] args) throws IOException{
 		Map<String, Map<String, Integer>> usuariosIp = new HashMap<>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int mensajes = 0; //contador para los mensajes por ip
+		int mensajes = 0;
 		String ip = null , mensaje = null, usuario = null, linea;
 		boolean fin = false;
 		do {
@@ -38,7 +38,7 @@ public class Ips {
 								estado = 1;
 							}
 						} catch (NoSuchElementException e) {
-							System.out.println("Se esperaba terminar o Ip");
+							System.out.println("Se esperaba terminar o Ip=(");
 							estado = 7;
 						}
 						break;
@@ -56,7 +56,7 @@ public class Ips {
 							token = teclado.skip("\\)\\s*mensaje=\\(").match().group();					
 							estado = 3;
 						} catch (NoSuchElementException e) {
-							System.out.println("Se esperaba 'mensaje'");
+							System.out.println("Se esperaba ')' o 'mensaje=('");
 							estado = 7;
 						}
 						break;
@@ -65,7 +65,7 @@ public class Ips {
 							mensaje = teclado.skip("(\\p{L}+\\s*)+\\)").match().group();
 							estado = 4;
 						} catch (NoSuchElementException e) {
-							System.out.println("Se esperaba un mensaje");
+							System.out.println("Se esperaba un mensaje o ')'");
 							estado = 7;
 						}
 						break;
@@ -74,7 +74,7 @@ public class Ips {
 							token = teclado.skip("\\s*usuario=\\(").match().group();					
 							estado = 5;
 						} catch (NoSuchElementException e) {
-							System.out.println("Se esperaba 'usuario'");
+							System.out.println("Se esperaba 'usuario=('");
 							estado = 7;
 						}
 						break;
@@ -118,8 +118,8 @@ public class Ips {
 		
 		Iterator<Map.Entry<String, Map<String, Integer>>> mapa = usuariosIp.entrySet().iterator();
 		while (mapa.hasNext()) {
-			int numIp = 0; //contador para el número de ips
-			int totalMensajes = 0; //contador para el total de mensajes
+			int numIp = 0; 
+			int totalMensajes = 0;
 			Map.Entry<String, Map<String, Integer>> entrada1 = mapa.next();		
 			String nombreUsuario = entrada1.getKey();
 			System.out.println(nombreUsuario + ":");
