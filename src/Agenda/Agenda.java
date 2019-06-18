@@ -2,6 +2,8 @@ package Agenda;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 
 public class Agenda {
 
@@ -45,9 +48,10 @@ public class Agenda {
 								estado2 = "borrar";
 								estado = 3;											
 							}
-//							else if (token.equals("cargar")) {
-//								
-//							}
+							else if (token.equals("cargar")) {
+								estado2 = "cargar";
+								estado = 6;
+							}
 							else if (token.equals("guardar")) {
 								estado2 = "guardar";
 								estado = 3;
@@ -122,19 +126,17 @@ public class Agenda {
 						break;
 					case 5:
 						try {
-							ruta = teclado.skip("[A-Z]:¥(\\w+¥)*\\w*\\.*\\w+").match().group();
+							ruta = teclado.skip("[a-zA-Z]:/(\\w+/)*\\w*\\.*\\w+").match().group();
 							try {
-							fw = new FileWriter(ruta);
-							BufferedWriter bw = new BufferedWriter(fw);
-							PrintWriter pw = new PrintWriter(bw);
-							Set<String> claves = agenda.keySet();
-							Iterator<String> iterador = claves.iterator();
-							while (iterador.hasNext()) {
-								String nombreContacto = iterador.next();
-								String telefonoContacto = agenda.get(nombreContacto);
-								pw.println(nombreContacto + "-" + telefonoContacto);
-							}
-							pw.close();
+								fw = new FileWriter(ruta);
+								BufferedWriter bw = new BufferedWriter(fw);
+								PrintWriter pw = new PrintWriter(bw);
+								Iterator<Entry<String, String>> contactos = agenda.entrySet().iterator();
+								while (contactos.hasNext()) {
+									Map.Entry<String,String> entrada = contactos.next();
+									pw.println(entrada.getKey() + "-" + entrada.getValue());	
+								}
+								pw.close();
 							}catch (IOException e) {
 								System.out.println("No se ha podido guardar el fichero");
 							}
@@ -142,6 +144,28 @@ public class Agenda {
 							estado = 10;
 						}catch (NoSuchElementException e) {
 							System.out.println("La ruta no es valida");
+							estado = 10;
+						}
+						break;
+					case 6:
+						try {
+							ruta = teclado.skip("[a-zA-Z]:/(\\w+/)*\\w*\\.*\\w+").match().group();
+							try {
+								fr = new FileReader(ruta);
+								BufferedReader b = new BufferedReader(fr);
+								String linea;
+								while ((linea = br.readLine()) != null) {	
+									String[] contactos = linea.split("-");
+									agenda.put(contactos[0], contactos[1]);
+								}
+								System.out.println("Se ha cargado");
+								estado = 10;
+							}catch(FileNotFoundException e) {
+								System.out.println("No se ha podido leer el archivo");
+							}
+							estado = 10;
+						}catch (NoSuchElementException e) {
+							System.out.println("No se ha encontrado el archivo");
 							estado = 10;
 						}
 						break;
