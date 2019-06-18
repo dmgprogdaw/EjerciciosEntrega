@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -58,5 +59,4 @@ public class Juego extends JPanel {
 		add(sup, BorderLayout.CENTER);
 		add(inf, BorderLayout.SOUTH);
 	}
-
 }

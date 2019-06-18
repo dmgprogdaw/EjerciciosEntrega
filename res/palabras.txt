@@ -32255,6 +32255,7 @@ dorondón
 dorsal
 dorso
 dorsoventral
+dos
 dosalbo
 dosañal
 doscientos
