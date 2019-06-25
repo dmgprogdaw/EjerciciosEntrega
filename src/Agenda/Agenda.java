@@ -152,20 +152,20 @@ public class Agenda {
 							ruta = teclado.skip("[a-zA-Z]:/(\\w+/)*\\w*\\.*\\w+").match().group();
 							try {
 								fr = new FileReader(ruta);
-								BufferedReader b = new BufferedReader(fr);
+								BufferedReader b = new BufferedReader(fr);							
 								String linea;
-								while ((linea = br.readLine()) != null) {	
+								while ((linea = b.readLine()) != null) {	
 									String[] contactos = linea.split("-");
 									agenda.put(contactos[0], contactos[1]);
 								}
-								System.out.println("Se ha cargado");
-								estado = 10;
+								b.close();
 							}catch(FileNotFoundException e) {
 								System.out.println("No se ha podido leer el archivo");
 							}
+							System.out.println("Se ha cargado");
 							estado = 10;
 						}catch (NoSuchElementException e) {
-							System.out.println("No se ha encontrado el archivo");
+							System.out.println("La ruta no es valida");
 							estado = 10;
 						}
 						break;

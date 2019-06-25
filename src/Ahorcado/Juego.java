@@ -2,10 +2,14 @@ package Ahorcado;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -23,6 +27,8 @@ public class Juego extends JPanel {
 	
 	Lienzo lienzo;
 	String letras = "abcdefghijklmnñopqrstuvwxyz";
+	JLabel lblPalabra;
+	private JButton game;
 	private Font font;
 	
 	public Juego(Lienzo lienzo) throws FontFormatException, IOException {
@@ -34,7 +40,8 @@ public class Juego extends JPanel {
 		setLayout(new BorderLayout());
 		
 		JPanel sup = new JPanel(new GridLayout(1, 1));
-		JLabel lblPalabra = new JLabel(new ImageIcon(getClass().getResource("/IA.jpg")));
+		lblPalabra = new JLabel();
+		//lblPalabra = new JLabel(new ImageIcon(getClass().getResource("/IA.jpg")));
 		lblPalabra.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createEmptyBorder(30, 30, 30, 30),
 				BorderFactory.createCompoundBorder(
@@ -54,9 +61,21 @@ public class Juego extends JPanel {
 			inf.add(b);
 			b.setEnabled(false);//Todas la letras estan deshabilitadas
 		}
-		inf.add(new JButton("Jugar"));
+//		inf.add(new JButton("Jugar"));
+		game = new JButton("Jugar");
+		inf.add(game);
+
+		game.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			
+		});
 
 		add(sup, BorderLayout.CENTER);
 		add(inf, BorderLayout.SOUTH);
 	}
+	
+	
 }
