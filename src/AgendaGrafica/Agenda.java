@@ -43,7 +43,7 @@ public class Agenda {
 						estado = 2;		
 					}catch (NoSuchElementException e) {
 						resultado = "Se esperaba un '-'";
-						estado = 10;
+						estado = 5;
 					}
 					break;
 				case 2:
