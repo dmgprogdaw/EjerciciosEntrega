@@ -8,7 +8,7 @@ import java.util.TreeMap;
 public class Agenda {
 	static Map<String, String> agenda = new TreeMap<String, String>();
 	
-	public static String Ejecutar (String comando) {
+	public static String miAgenda (String comando) {
 		String resultado = null;
 		
 		Scanner s = new Scanner(comando);
@@ -51,10 +51,11 @@ public class Agenda {
 						token = s.skip("\\d{9}").match().group();
 						if (agenda.containsKey(nombre)) {	
 							agenda.put(nombre, token);
-							System.out.println("Se ha actualizado el telefono de " + nombre);
+							resultado = "Se ha actualizado el telefono de " + nombre;
 						}
 						else {
 							agenda.put(nombre, token);
+							resultado = "Se ha registrado a " + nombre + " en la agenda";
 						}
 						estado = 5;		
 					}catch (NoSuchElementException e) {

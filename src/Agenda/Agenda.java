@@ -23,8 +23,6 @@ public class Agenda {
 		Map<String, String> agenda = new TreeMap<String, String>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		boolean fin = false;
-		FileWriter fw;
-		FileReader fr;
 		
 		do {
 			System.out.print("> ");
@@ -128,7 +126,7 @@ public class Agenda {
 						try {
 							ruta = teclado.skip("[a-zA-Z]:/(\\w+/)*\\w*\\.*\\w+").match().group();
 							try {
-								fw = new FileWriter(ruta);
+								FileWriter fw = new FileWriter(ruta);
 								BufferedWriter bw = new BufferedWriter(fw);
 								PrintWriter pw = new PrintWriter(bw);
 								Iterator<Entry<String, String>> contactos = agenda.entrySet().iterator();
@@ -140,7 +138,7 @@ public class Agenda {
 							}catch (IOException e) {
 								System.out.println("No se ha podido guardar el fichero");
 							}
-							System.out.println("Se ha guardado");
+							System.out.println("Se ha guardado el fichero");
 							estado = 10;
 						}catch (NoSuchElementException e) {
 							System.out.println("La ruta no es valida");
@@ -151,7 +149,7 @@ public class Agenda {
 						try {
 							ruta = teclado.skip("[a-zA-Z]:/(\\w+/)*\\w*\\.*\\w+").match().group();
 							try {
-								fr = new FileReader(ruta);
+								FileReader fr = new FileReader(ruta);
 								BufferedReader b = new BufferedReader(fr);							
 								String linea;
 								while ((linea = b.readLine()) != null) {	
@@ -162,7 +160,7 @@ public class Agenda {
 							}catch(FileNotFoundException e) {
 								System.out.println("No se ha podido leer el archivo");
 							}
-							System.out.println("Se ha cargado");
+							System.out.println("Se ha cargado el fichero");
 							estado = 10;
 						}catch (NoSuchElementException e) {
 							System.out.println("La ruta no es valida");

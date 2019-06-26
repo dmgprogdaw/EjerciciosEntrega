@@ -4,6 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,64 +25,79 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 
 
-public class Main implements ActionListener{
+public class Main extends JFrame implements ActionListener, KeyListener, WindowListener{
 	
 	private static JTextArea ta;
 	private static JTextField tf;
 	
-	public static void main(String[] args) throws IOException {		
-		JFrame frame = new JFrame("Mi Agenda");
-		frame.setIconImage(ImageIO.read(Main.class.getResource("/SinCara.png")));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500, 500);
-		frame.setLocationRelativeTo(null);
+	public Main () throws IOException {
+		super("Mi Agenda");
+		setIconImage(ImageIO.read(getClass().getResource("/SinCara.png")));
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setSize(500, 500);
+		setLocationRelativeTo(null);
+		addWindowListener(this);
 		
-		JToolBar menuHorizontal = new JToolBar();
-		frame.getContentPane().add(BorderLayout.NORTH, menuHorizontal);	
-		
-		JButton abrir = new JButton(new ImageIcon(Main.class.getResource("/Open file.png")));
-		menuHorizontal.add(abrir);
-		Main listener = new Main();
+		JToolBar barraSuperior = new JToolBar();		
+		JButton abrir = new JButton(new ImageIcon(getClass().getResource("/Open file.png")));
 		abrir.setActionCommand("ABRIR");
-		abrir.addActionListener(listener);
-		JButton guardar = new JButton(new ImageIcon(Main.class.getResource("/Save.png")));		
-		menuHorizontal.add(guardar);
-		guardar.setActionCommand("GUARDAR");		
-		guardar.addActionListener(listener);
+		abrir.addActionListener(this);
+		JButton guardar = new JButton(new ImageIcon(getClass().getResource("/Save.png")));
+		guardar.setActionCommand("GUARDAR");
+		guardar.addActionListener(this);
+		barraSuperior.add(abrir);
+		barraSuperior.add(guardar);
+		add(BorderLayout.NORTH, barraSuperior);
 		
 		ta = new JTextArea();
 		ta.setFocusable(false);
 		ta.setBackground(Color.white);
-		frame.getContentPane().add(BorderLayout.CENTER, ta);	
+		add(BorderLayout.CENTER, ta);
 		
-		JPanel panel = new JPanel();
-		panel.setLayout(new BorderLayout());
-		panel.setBackground(Color.LIGHT_GRAY);		
-		frame.getContentPane().add(BorderLayout.SOUTH, panel);
+		JPanel barraInferior = new JPanel();
+		barraInferior.setLayout(new BorderLayout());
 		tf = new JTextField();
-		tf.setColumns(20);
-		panel.add(BorderLayout.CENTER, tf);
-		JButton ejecutar = new JButton(new ImageIcon(Main.class.getResource("/Play.png")));	
-		panel.add(ejecutar, BorderLayout.EAST);		
+		tf.addKeyListener(this);
+		JButton ejecutar = new JButton(new ImageIcon(getClass().getResource("/Play.png")));
 		ejecutar.setActionCommand("EJECUTAR");
-		ejecutar.addActionListener(listener);
-		
-		frame.setVisible(true);
+		ejecutar.addActionListener(this);
+		barraInferior.add(BorderLayout.CENTER, tf);
+		barraInferior.add(BorderLayout.EAST, ejecutar);
+		add(BorderLayout.SOUTH, barraInferior);
+	}
+	
+	public static void main(String[] args)  {		
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					new Main().setVisible(true);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}		
+		});
+	}		
+	
+	public void EjecutarComando() {
+		String resultado = Agenda.miAgenda(tf.getText());
+		if (resultado != null) {
+			ta.append(resultado + "\n");
+		}
+		tf.setText("");
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("EJECUTAR")) {
-			String resultado = Agenda.Ejecutar(tf.getText());
-			if (resultado != null) {
-				ta.append(resultado + "\n");
-			}
-			tf.setText("");
+			EjecutarComando();
 		}
 		else if(e.getActionCommand().equals("GUARDAR")) {
 			JFileChooser guardarFichero = new JFileChooser();
@@ -132,5 +151,65 @@ public class Main implements ActionListener{
 				tf.setText("");
 			}
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+		
+		if (key == KeyEvent.VK_ENTER) {
+			EjecutarComando();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Apéndice de método generado automáticamente
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Apéndice de método generado automáticamente
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		tf.requestFocus();		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Apéndice de método generado automáticamente
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		int cerrar = JOptionPane.showConfirmDialog(Main.this, "¿Estas seguro?", "Salir de la aplicacion?", JOptionPane.YES_NO_OPTION);
+		if(cerrar == JOptionPane.YES_OPTION)
+			System.exit(0);
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Apéndice de método generado automáticamente
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Apéndice de método generado automáticamente
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Apéndice de método generado automáticamente
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Apéndice de método generado automáticamente
+		
 	}
 }
