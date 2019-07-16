@@ -3,14 +3,12 @@ package Ips;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Ips {
 
@@ -18,7 +16,7 @@ public class Ips {
 		Map<String, Map<String, Integer>> usuariosIp = new HashMap<>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int mensajes = 0;
-		String ip = null , mensaje = null, usuario = null, linea;
+		String ip = null , usuario = null;
 		boolean fin = false;
 		do {
 			System.out.print("> ");
@@ -62,7 +60,6 @@ public class Ips {
 						break;
 					case 3:
 						try {
-							mensaje = teclado.skip("(\\p{L}+\\s*)+\\)").match().group();
 							estado = 4;
 						} catch (NoSuchElementException e) {
 							System.out.println("Se esperaba un mensaje o ')'");
@@ -113,6 +110,7 @@ public class Ips {
 						break;
 				}
 			}
+			teclado.close();
 		}while (!fin);
 		
 		
